@@ -65,7 +65,8 @@ namespace ego_planner
     enum FORMATION_TYPE
     {
       NONE_FORMATION        = 0,
-      REGULAR_HEXAGON       = 1
+      REGULAR_HEXAGON       = 1,
+      TRIANGULAR            = 2
     };
 
     /* optimization parameters */
@@ -217,6 +218,23 @@ namespace ego_planner
           swarm_des.push_back(v4);
           swarm_des.push_back(v5);
           swarm_des.push_back(v6);
+
+          formation_size_ = swarm_des.size();
+          // construct the desired swarm graph
+          swarm_graph_->setDesiredForm(swarm_des);
+          break;
+        }
+
+        case FORMATION_TYPE::TRIANGULAR :
+        {
+          // set the desired formation
+          Eigen::Vector3d v0(0,0,0);
+          Eigen::Vector3d v1(-1.7321,-1,0);
+          Eigen::Vector3d v2(-1.7321,1,0);
+
+          swarm_des.push_back(v0);
+          swarm_des.push_back(v1);
+          swarm_des.push_back(v2);
 
           formation_size_ = swarm_des.size();
           // construct the desired swarm graph

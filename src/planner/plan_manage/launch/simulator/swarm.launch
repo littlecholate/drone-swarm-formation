@@ -1,0 +1,56 @@
+<launch>
+    <!-- virtual map generator (should be remove in real experiment) -->
+    <node pkg ="map_generator" name ="random_forest" type ="random_forest" output = "screen">    
+        <param name="map/x_size"     value="20" />
+        <param name="map/y_size"     value="10" />
+        <param name="map/z_size"     value="3.0" />
+        <param name="map/resolution" value="0.1"/>
+
+        <param name="pub_rate"       value="1.0"/> <!-- virtual map point cloud publication rate--> 
+        <param name="wall_type"      value="1"/> <!-- 0 for no wall; 1 for border -->
+        <param name="fix_obs_type"   value="1"/> <!-- 0 for no obstacle -->
+    </node>
+
+    <!-- networking -->
+    <node pkg="swarm_bridge" name="bridge_node" type="bridge_node" output="screen">
+        <param name="drone_id" value="999"/> <!-- bridge node id, currenctly set to 999 -->
+        <param name="broadcast_ip" value="127.0.0.255" type="string"/> 
+    </node>
+
+    <!-- swarm robots (should be reduce to only one drone in real experiment) -->
+    <include file="$(find ego_planner)/launch/simulator/single_drone.launch">
+        <arg name="drone_id" value="0"/>
+
+        <arg name="init_x" value="-5.0"/>
+        <arg name="init_y" value="0.0"/>
+        <arg name="init_z" value="0.5"/>
+
+        <arg name="target_x" value="7.0"/>
+        <arg name="target_y" value="0.0"/>
+        <arg name="target_z" value="0.5"/>
+    </include>
+
+    <include file="$(find ego_planner)/launch/simulator/single_drone.launch">
+        <arg name="drone_id" value="1"/>
+
+        <arg name="init_x" value="-8.0"/>
+        <arg name="init_y" value="-2.0"/>
+        <arg name="init_z" value="0.5"/>
+
+        <arg name="target_x" value="4.0"/>
+        <arg name="target_y" value="-2.0"/>
+        <arg name="target_z" value="0.5"/>
+    </include>
+
+    <include file="$(find ego_planner)/launch/simulator/single_drone.launch">
+        <arg name="drone_id" value="2"/>
+
+        <arg name="init_x" value="-8.0"/>
+        <arg name="init_y" value="2.0"/>
+        <arg name="init_z" value="0.5"/>
+
+        <arg name="target_x" value="4.0"/>
+        <arg name="target_y" value="2.0"/>
+        <arg name="target_z" value="0.5"/>
+    </include>
+</launch>

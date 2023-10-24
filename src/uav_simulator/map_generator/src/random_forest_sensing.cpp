@@ -43,7 +43,7 @@ double _x_size, _y_size, _z_size;
 double _x_l, _x_h, _y_l, _y_h, _w_l, _w_h, _h_l, _h_h;
 double _z_limit, _sensing_range, _resolution, _pub_rate;
 double _min_dist;
-int fix_obs_type_;
+int fix_obs_type_, wall_type_;
 
 bool _map_ok = false;
 bool _has_odom = false;
@@ -317,24 +317,74 @@ void FixMapGenerate(){
     case 1: // WALL_WITH_HOLE
     { 
       double x_l, x_h, y_l, y_h, z_l, z_h;
-      x_l = -3.2;
-      x_h = 3.2;
-      y_l = - _y_size / 2;
-      y_h = -1.6;
+      x_l = -0.9;
+      x_h = 0.9;
+      y_l = -2.4;
+      y_h = -0.6;
       z_l = -1.0;
       z_h = _z_size;
       GenerateWall(x_l, x_h, y_l, y_h, z_l, z_h, cloudMap);
-      x_l = -3.2;
-      x_h = 3.2;
-      y_l = 1.6;
-      y_h = _y_size / 2;
+      x_l = -0.9;
+      x_h = 0.9;
+      y_l = 0.6;
+      y_h = 2.4;
+      z_l = -1.0;
+      z_h = _z_size;
+      GenerateWall(x_l, x_h, y_l, y_h, z_l, z_h, cloudMap);
+
+      break;
+    }
+  }
+  switch (wall_type_)
+  {
+    case 0: // NONE_WALL
+    {
+      break;
+    }
+    case 1: // WALL_IN_CORNER
+    { 
+      double x_l, x_h, y_l, y_h, z_l, z_h;
+      x_l = -_x_size/2;
+      x_h = _x_size/2;
+      y_l = -_y_size/2;
+      y_h = -_y_size/2 + 0.1;
+      z_l = -1.0;
+      z_h = _z_size;
+      GenerateWall(x_l, x_h, y_l, y_h, z_l, z_h, cloudMap);
+      x_l = -_x_size/2;
+      x_h = _x_size/2;
+      y_l = _y_size/2 - 0.1;
+      y_h = _y_size/2;
+      z_l = -1.0;
+      z_h = _z_size;
+      GenerateWall(x_l, x_h, y_l, y_h, z_l, z_h, cloudMap);
+      x_l = -_x_size/2;
+      x_h = -_x_size/2 + 0.1;
+      y_l = -_y_size/2;
+      y_h = _y_size/2;
+      z_l = -1.0;
+      z_h = _z_size;
+      GenerateWall(x_l, x_h, y_l, y_h, z_l, z_h, cloudMap);
+      x_l = _x_size/2 - 0.1;
+      x_h = _x_size/2;
+      y_l = -_y_size/2;
+      y_h = _y_size/2;
       z_l = -1.0;
       z_h = _z_size;
       GenerateWall(x_l, x_h, y_l, y_h, z_l, z_h, cloudMap);
       break;
     }
-
   }
+
+  cloudMap.width = cloudMap.points.size();
+  cloudMap.height = 1;
+  cloudMap.is_dense = true;
+
+  ROS_WARN("Finished generate random map ");
+
+  kdtreeLocalMap.setInputCloud(cloudMap.makeShared());
+
+  _map_ok = true;
 
   ROS_WARN("Finished generate fixed map ");
 }
@@ -423,6 +473,7 @@ int main(int argc, char **argv)
   n.param("ObstacleShape/z_h", z_h_, 7.0);
   n.param("ObstacleShape/theta", theta_, 7.0);
   n.param("fix_obs_type", fix_obs_type_, 0);
+  n.param("wall_type", wall_type_, 0);
 
   n.param("pub_rate", _pub_rate, 10.0);
   n.param("min_distance", _min_dist, 1.0);
@@ -444,8 +495,8 @@ int main(int argc, char **argv)
   eng.seed(seed);
   
   // RandomMapGenerate();  wait to debug
-  RandomMapGenerateCylinder();
-  // FixMapGenerate();
+  // RandomMapGenerateCylinder();
+  FixMapGenerate();
 
   ros::Rate loop_rate(_pub_rate);
   
