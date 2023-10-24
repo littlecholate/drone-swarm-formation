@@ -1,0 +1,20 @@
+<launch>
+    <!-- networking -->
+    <node pkg="swarm_bridge" name="bridge_node" type="bridge_node" output="screen">
+        <param name="drone_id" value="0"/>
+        <param name="broadcast_ip" value="127.0.0.255" type="string"/> 
+    </node>
+
+    <!-- swarm robots (should be reduce to only one drone in real experiment) -->
+    <include file="$(find ego_planner)/launch/real_world/real_drone.launch">
+        <arg name="drone_id" value="0"/>
+
+        <arg name="init_x" value="0.0"/>
+        <arg name="init_y" value="0.0"/>
+        <arg name="init_z" value="0.5"/>
+
+        <arg name="target_x" value="5.0"/>
+        <arg name="target_y" value="0.0"/>
+        <arg name="target_z" value="0.5"/>
+    </include>
+</launch>
