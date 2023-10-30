@@ -7,7 +7,7 @@
         <param name="map/resolution" value="0.1"/>
 
         <param name="pub_rate"       value="1.0"/> <!-- virtual map point cloud publication rate--> 
-        <param name="wall_type"      value="1"/> <!-- 0 for no wall; 1 for border -->
+        <param name="wall_type"      value="0"/> <!-- 0 for no wall; 1 for border -->
         <param name="fix_obs_type"   value="1"/> <!-- 0 for no obstacle -->
     </node>
 

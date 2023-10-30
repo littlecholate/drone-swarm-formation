@@ -44,7 +44,7 @@
         <arg name="fx" value="387.229248046875"/>
         <arg name="fy" value="387.229248046875"/>
 
-        <arg name="flight_type" value="2"/>
+        <arg name="flight_type" value="3"/>
         <!-- 2: use global waypoints below  -->
         <arg name="point_num" value="1"/> <!-- "1" means only one waypoint, which is the target point-->
         <arg name="point0_x" value="$(arg target_x)"/>

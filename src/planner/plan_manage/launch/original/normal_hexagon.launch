@@ -36,7 +36,8 @@
     
         <param name="pub_rate"   value="1.0"/>
         <param name="fix_obs_type"   value="1"/>
-        <param name="min_distance" value="0.8"/>         
+        <param name="min_distance" value="0.8"/> 
+        <param name="wall_type"      value="0"/>        
     </node>
 
     <!-- swarm robots -->
@@ -59,7 +60,6 @@
         
     </include>
 
-    
     <include file="$(find ego_planner)/launch/original/run_in_sim.launch">
         <arg name="drone_id" value="1"/>
 

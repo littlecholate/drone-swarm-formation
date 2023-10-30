@@ -14,7 +14,7 @@
     <arg name="map_size_z" value="3.0"/>
         
     <!-- topic of the odometry from VIO for planning and simulator -->
-    <arg name="odom_topic" value="visual_slam/odom"/> <!-- vins_estimator/odometry -->
+    <arg name="odom_topic" value="vins_estimator/odometry"/> <!-- visual_slam/odom -->
 
     <!-- main algorithm params -->
     <include file="$(find ego_planner)/launch/real_world/advanced_drone.xml">
@@ -27,7 +27,7 @@
         <arg name="odometry_topic" value="$(arg odom_topic)"/>
         <arg name="camera_pose_topic" value="pcl_render_node/camera_pose"/> <!-- vins_estimator/camera_pose -->
         <arg name="depth_topic" value="pcl_render_node/depth"/> <!-- realsense/depth_camera/color/image_raw --> 
-        <arg name="cloud_topic" value="pcl_render_node/cloud"/> <!-- vins_estimator/pointcloud -->
+        <arg name="cloud_topic" value="vins_estimator/pointcloud"/> <!-- pcl_render_node/cloud-->
 
         <!-- most important parameters that may affect much -->
         <!-- maximum velocity and acceleration the drone will reach -->
@@ -44,7 +44,7 @@
         <arg name="fx" value="387.229248046875"/>
         <arg name="fy" value="387.229248046875"/>
 
-        <arg name="flight_type" value="2"/>
+        <arg name="flight_type" value="3"/>
         <!-- 2: use global waypoints below  -->
         <arg name="point_num" value="1"/> <!-- "1" means only one waypoint, which is the target point-->
         <arg name="point0_x" value="$(arg target_x)"/>

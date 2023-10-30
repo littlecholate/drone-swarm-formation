@@ -77,7 +77,7 @@
         <!-- 3: use 2D Nav Goal to select goal  -->
         <!-- 2: use global waypoints below  -->
         <!-- need to add -->
-        <arg name="flight_type" value="2" />
+        <arg name="flight_type" value="3" />
         <!-- global waypoints -->
         <!-- It generates a piecewise min-snap traj passing all waypoints -->
         <arg name="point_num" value="1" />

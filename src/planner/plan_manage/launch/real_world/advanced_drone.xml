@@ -51,7 +51,7 @@
         <param name="fsm/planning_horizon"        value="$(arg planning_horizon)" type="double"/> 
         <param name="fsm/planning_horizen_time"   value="3"                       type="double"/>
         <param name="fsm/emergency_time"          value="1.0"                     type="double"/>
-        <param name="fsm/realworld_experiment"    value="false"/>
+        <param name="fsm/realworld_experiment"    value="false"/> <!-- this tag need to coorperate with flight control -->
         <param name="fsm/fail_safe"               value="true"/>
         <param name="fsm/replan_trajectory_time"  value="$(arg replan_trajectory_time)" type="double"/>
         <param name="fsm/result_file" value="/home/ego_swarm_fsm.txt"/>
@@ -60,6 +60,9 @@
         <param name="fsm/waypoint0_x"   value="$(arg point0_x)"  type="double"/>
         <param name="fsm/waypoint0_y"   value="$(arg point0_y)"  type="double"/>
         <param name="fsm/waypoint0_z"   value="$(arg point0_z)"  type="double"/>
+
+        <!-- formation setting -->
+        <rosparam file="$(find ego_planner)/config/formation.yaml"/>
 
         <!-- parameters in grid map -->
         <param name="grid_map/resolution"             value="0.1" /> 

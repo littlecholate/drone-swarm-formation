@@ -117,7 +117,6 @@ namespace ego_planner
     {
       central_goal = nh.subscribe("/move_base_simple/goal", 1, &EGOReplanFSM::formationWaypointCallback, this);
     }
-    cout << "Wrong target_type_ value! target_type_=" << target_type_ << endl;
   }
 
   void EGOReplanFSM::execFSMCallback(const ros::TimerEvent &e)
@@ -129,7 +128,7 @@ namespace ego_planner
     if (fsm_num == 100)
     {
       fsm_num = 0;
-      // printFSMExecState();
+      printFSMExecState();
     }
 
     switch (exec_state_)
