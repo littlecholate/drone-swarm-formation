@@ -763,9 +763,12 @@ namespace ego_planner
     LocalTrajData *info = &planner_manager_->traj_.local_traj;
     double t_cur = ros::Time::now().toSec() - info->start_time;
 
-    start_pt_ = info->traj.getPos(t_cur);
-    start_vel_ = info->traj.getVel(t_cur);
-    start_acc_ = info->traj.getAcc(t_cur);
+    //start_pt_ = info->traj.getPos(t_cur);
+    //start_vel_ = info->traj.getVel(t_cur);
+    //start_acc_ = info->traj.getAcc(t_cur);
+    start_pt_ = odom_pos_;
+    start_vel_ = odom_vel_;
+    start_acc_.setZero();
 
     bool success = callReboundReplan(flag_use_poly_init, false, use_formation);
 
@@ -789,12 +792,17 @@ namespace ego_planner
     if (have_local_traj_ && use_formation)
     {
       desired_start_time = ros::Time::now().toSec() + replan_trajectory_time_;
+      /*
       desired_start_pt =
           planner_manager_->traj_.local_traj.traj.getPos(desired_start_time - planner_manager_->traj_.local_traj.start_time);
       desired_start_vel =
           planner_manager_->traj_.local_traj.traj.getVel(desired_start_time - planner_manager_->traj_.local_traj.start_time);
       desired_start_acc =
           planner_manager_->traj_.local_traj.traj.getAcc(desired_start_time - planner_manager_->traj_.local_traj.start_time);
+      */
+      desired_start_pt = start_pt_;
+      desired_start_vel = start_vel_;
+      desired_start_acc = start_acc_;
     }
     else
     {
